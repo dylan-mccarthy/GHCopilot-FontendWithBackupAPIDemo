@@ -1,9 +1,8 @@
 export interface Planet {
     id: number;
     name: string;
-    type: string;
+    description: string;
     distanceFromSun: number;
-    hasRings: boolean;
 }
 
 export interface Moon {

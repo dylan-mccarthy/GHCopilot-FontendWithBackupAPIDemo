@@ -49,21 +49,48 @@ const Moons = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Moons</h1>
-      <div className="grid gap-4">
-        {moons.map((moon) => (
-          <div key={moon.id} className="border p-4 rounded">
-            <h2 className="font-bold">{moon.name}</h2>
-            <p>Planet ID: {moon.planetId}</p>
-            <p>Diameter: {moon.diameter}</p>
-            <p>Distance from Planet: {moon.distanceFromPlanet}</p>
-            <div className="mt-2">
-              <button onClick={() => setEditingMoon(moon)}>Edit</button>
-              <button onClick={() => handleDelete(moon.id)}>Delete</button>
+    <div className="min-h-screen bg-gray-900 px-4 py-12">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-extrabold text-white mb-4 tracking-tight">Moons</h1>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Discover the natural satellites orbiting our planets
+          </p>
+        </div>
+
+        <div className="grid gap-8 max-w-4xl mx-auto">
+          {moons.map((moon) => (
+            <div 
+              key={moon.id} 
+              className="rounded-xl p-8 bg-gray-800/50 backdrop-blur border border-gray-700 transition-all duration-300 hover:border-blue-500 shadow-xl"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <h2 className="text-3xl font-bold text-blue-400 mb-4">{moon.name}</h2>
+                  <div className="space-y-3 text-lg">
+                    <p className="text-gray-300">Planet ID: {moon.planetId}</p>
+                    <p className="text-gray-300">Diameter: {moon.diameter.toLocaleString()} km</p>
+                    <p className="text-gray-300">Distance from Planet: {moon.distanceFromPlanet.toLocaleString()} km</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <button 
+                    onClick={() => setEditingMoon(moon)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-300"
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(moon.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-300"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

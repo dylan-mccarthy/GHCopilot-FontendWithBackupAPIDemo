@@ -1,18 +1,21 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Planet, Moon } from './interfaces';
 
-const API_URL = 'http://localhost:5172/api';
+const API_URL = 'http://localhost:5172';
 
 export const api = axios.create({
     baseURL: API_URL
 });
 
 // Planets API
-export const getPlanets = () => api.get<Planet[]>('/planets');
-export const getPlanet = (id: number) => api.get<Planet>(`/planets/${id}`);
-export const createPlanet = (planet: Omit<Planet, 'id'>) => api.post<Planet>('/planets', planet);
-export const updatePlanet = (id: number, planet: Planet) => api.put<Planet>(`/planets/${id}`, planet);
-export const deletePlanet = (id: number) => api.delete(`/planets/${id}`);
+export const getPlanets = (): Promise<AxiosResponse<Planet[]>> => api.get('/planets');
+export const getPlanet = (id: number): Promise<AxiosResponse<Planet>> => api.get(`/planets/${id}`);
+export const createPlanet = (planet: Omit<Planet, 'id'>): Promise<AxiosResponse<Planet>> => 
+    api.post('/planets', planet);
+export const updatePlanet = (id: number, planet: Planet): Promise<AxiosResponse<Planet>> => 
+    api.put(`/planets/${id}`, planet);
+export const deletePlanet = (id: number): Promise<AxiosResponse<void>> => 
+    api.delete(`/planets/${id}`);
 
 // Moons API
 export const getMoons = () => api.get<Moon[]>('/moons');
