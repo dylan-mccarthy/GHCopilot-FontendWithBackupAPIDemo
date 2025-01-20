@@ -113,4 +113,51 @@ app.MapDelete("/moons/{id}", async (AstroDb db, int id) =>
     return Results.Ok();
 });
 
+app.MapGet("/asteroids", async (AstroDb db) =>
+{
+    var asteroids = await db.Asteroids.ToListAsync();
+    return Results.Ok(asteroids);
+});
+
+app.MapPost("/asteroids", async (AstroDb db, Asteroid asteroid) =>
+{
+    asteroid.Id = 0;
+    await db.Asteroids.AddAsync(asteroid);
+    await db.SaveChangesAsync();
+    return Results.Created($"/asteroids/{asteroid.Id}", asteroid);
+}).Produces<Asteroid>(StatusCodes.Status201Created);
+
+app.MapGet("/asteroids/{id}", async (AstroDb db, int id) =>
+{
+    var asteroid = await db.Asteroids.FindAsync(id);
+    if (asteroid is null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(asteroid);
+});
+
+app.MapPut("/asteroids/{id}", async (AstroDb db, int id, Asteroid asteroid) =>
+{
+    if (id != asteroid.Id)
+    {
+        return Results.BadRequest();
+    }
+    db.Asteroids.Update(asteroid);
+    await db.SaveChangesAsync();
+    return Results.Ok(asteroid);
+});
+
+app.MapDelete("/asteroids/{id}", async (AstroDb db, int id) =>
+{
+    var asteroid = await db.Asteroids.FindAsync(id);
+    if (asteroid is null)
+    {
+        return Results.NotFound();
+    }
+    db.Asteroids.Remove(asteroid);
+    await db.SaveChangesAsync();
+    return Results.Ok();
+});
+
 app.Run();

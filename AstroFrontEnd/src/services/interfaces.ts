@@ -12,3 +12,11 @@ export interface Moon {
     diameter: number;
     distanceFromPlanet: number;
 }
+
+export interface Asteroid {
+    id: number;
+    name: string;
+    diameterInKm: number;
+    isPotentiallyHazardous: boolean;
+    composition: string;
+}
