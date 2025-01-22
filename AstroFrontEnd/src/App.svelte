@@ -11,7 +11,10 @@
 		<Link to="moons">Moons</Link>
 	</nav>
 	<div>
-		<Route path="/"></Route>
+		<Route path="/">
+			<h1>Main Title</h1>
+			<h2>Subtitle</h2>
+		</Route>
 		<Route path="planets" component={Planets} />
 		<Route path="moons" component={Moons} />
 	</div>
