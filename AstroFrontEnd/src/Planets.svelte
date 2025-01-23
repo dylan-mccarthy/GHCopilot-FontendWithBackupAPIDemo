@@ -33,30 +33,39 @@
     onMount(fetchPlanets);
   </script>
   
-  <h1>Planets ({planets.length})</h1>
+  <div class="main-container">
+    <h1>Planets ({planets.length})</h1>
   
-  <form on:submit={addPlanet}>
-    <label>
-      Name:
-      <input type="text" name="name" required>
-    </label>
-    <label>
-      Description:
-      <textarea name="description" required></textarea>
-    </label>
-    <label>
-      Distance from Sun (in millions of kilometers):
-      <input type="number" name="distanceFromSun" required>
-    </label>
-    <button type="submit">Add Planet</button>
-  </form>
+    <form on:submit={addPlanet}>
+      <label>
+        Name:
+        <input type="text" name="name" required>
+      </label>
+      <label>
+        Description:
+        <textarea name="description" required></textarea>
+      </label>
+      <label>
+        Distance from Sun (in millions of kilometers):
+        <input type="number" name="distanceFromSun" required>
+      </label>
+      <button type="submit">Add Planet</button>
+    </form>
   
-  <ul>
-    {#each planets as planet}
-      <li>
-        <h2>{planet.name}</h2>
-        <p>{planet.description}</p>
-        <p>Distance from Sun: {planet.distanceFromSun} million km</p>
-      </li>
-    {/each}
-  </ul>
+    <ul>
+      {#each planets as planet}
+        <li>
+          <h2>{planet.name}</h2>
+          <p>{planet.description}</p>
+          <p>Distance from Sun: {planet.distanceFromSun} million km</p>
+        </li>
+      {/each}
+    </ul>
+  </div>
+  
+  <style>
+    .main-container {
+      font-size: 18px;
+      color: green;
+    }
+  </style>

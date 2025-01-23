@@ -10,9 +10,16 @@
 		<Link to="planets">Planets</Link>
 		<Link to="moons">Moons</Link>
 	</nav>
-	<div>
+	<div class="main-container">
 		<Route path="/"></Route>
 		<Route path="planets" component={Planets} />
 		<Route path="moons" component={Moons} />
 	</div>
 </Router>
+
+<style>
+	.main-container {
+		font-size: 18px;
+		color: green;
+	}
+</style>
