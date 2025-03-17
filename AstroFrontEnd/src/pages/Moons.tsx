@@ -6,6 +6,13 @@ import React from 'react';
 const Moons = () => {
   const [moons, setMoons] = useState<Moon[]>([]);
   const [editingMoon, setEditingMoon] = useState<Moon | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [newMoon, setNewMoon] = useState<Omit<Moon, 'id'>>({
+    name: '',
+    planetId: 0,
+    diameter: 0,
+    distanceFromPlanet: 0
+  });
 
   useEffect(() => {
     fetchMoons();
@@ -26,6 +33,22 @@ const Moons = () => {
       fetchMoons();
     } catch (error) {
       console.error('Error creating moon:', error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await handleCreate(newMoon);
+      setNewMoon({
+        name: '',
+        planetId: 0,
+        diameter: 0,
+        distanceFromPlanet: 0
+      });
+      setShowForm(false);
+    } catch (error) {
+      console.error('Error adding moon:', error);
     }
   };
 
@@ -57,6 +80,59 @@ const Moons = () => {
             Discover the natural satellites orbiting our planets
           </p>
         </div>
+
+        <div className="flex justify-end mb-8">
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg 
+                     text-lg font-semibold transition-all duration-300 flex items-center gap-2"
+          >
+            {showForm ? 'Cancel' : 'Add New Moon'}
+            <span className="text-2xl">{showForm ? '−' : '+'}</span>
+          </button>
+        </div>
+
+        {showForm && (
+          <form onSubmit={handleSubmit} className="mt-8 bg-gray-900 rounded-xl p-8 border border-gray-800">
+            <div className="space-y-6">
+              <input
+                type="text"
+                placeholder="Moon Name"
+                value={newMoon.name}
+                onChange={(e) => setNewMoon({...newMoon, name: e.target.value})}
+                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-3"
+              />
+              <input
+                type="number"
+                placeholder="Planet ID"
+                value={newMoon.planetId}
+                onChange={(e) => setNewMoon({...newMoon, planetId: Number(e.target.value)})}
+                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-3"
+              />
+              <input
+                type="number"
+                placeholder="Diameter (km)"
+                value={newMoon.diameter}
+                onChange={(e) => setNewMoon({...newMoon, diameter: Number(e.target.value)})}
+                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-3"
+              />
+              <input
+                type="number"
+                placeholder="Distance from Planet (km)"
+                value={newMoon.distanceFromPlanet}
+                onChange={(e) => setNewMoon({...newMoon, distanceFromPlanet: Number(e.target.value)})}
+                className="w-full bg-gray-800 text-white border border-gray-700 rounded-lg px-4 py-3"
+              />
+              <button
+                type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg 
+                         font-semibold transition-all duration-300"
+              >
+                Add Moon
+              </button>
+            </div>
+          </form>
+        )}
 
         <div className="grid gap-8 max-w-4xl mx-auto">
           {moons.map((moon) => (
