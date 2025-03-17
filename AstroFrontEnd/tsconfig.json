@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "baseUrl": "src",
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "target":"ES2022",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "strict": true,
+      "allowJs":true,
+      "sourceMap": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "module": "esnext",
+      "paths": {
+        "@/*": ["*"]
+      }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+  }
